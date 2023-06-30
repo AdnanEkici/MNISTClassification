@@ -13,4 +13,4 @@ class ModelTest(unittest.TestCase):
 
     def test_is_model_valid(self):
         output = self.classification_model(self.dummy_tensor)
-        self.assertTrue(output.shape == torch.Size([32, 10]) , msg="Output is not expected. Please check model.")
+        self.assertTrue(output.shape == torch.Size([32, 10]), msg="Output is not expected. Please check model.")
