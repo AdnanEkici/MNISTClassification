@@ -9,7 +9,7 @@ import pandas as pd
 import torch
 from torchvision import transforms
 
-from custom_dataloader import CustomMNISTDataset
+from custom_dataset import CustomMNISTDataset
 
 
 class CustomDatasetTest(unittest.TestCase):
@@ -22,7 +22,7 @@ class CustomDatasetTest(unittest.TestCase):
         self.assertEqual(self.data_length, expected_length, msg="Length of dataset must be 10")
 
     def test_transforms(self):
-        def check_types(expected_image, expected_label):
+        def check_types(expected_image: torch.Tensor, expected_label: np.int64):
             self.assertIsInstance(expected_image, torch.Tensor, msg=f"Data must be a tensor but received {type(expected_image)}")
             self.assertIsInstance(expected_label, np.int64, msg=f"Label must be an integer but received {type(expected_label)}")
 
@@ -50,11 +50,12 @@ class CustomDatasetTest(unittest.TestCase):
         self.assertListEqual(assertion_list, incoming_labels, msg="Labels must be came in correct order of assertion list")
 
     def test_visulize_labels_and_tensors(self):
-        for index in range(self.data_length):
-            tensor, label = self.custom_dataset[index]
+        def visualize(tensor: torch.tensor, label: np.int64):
             image = tensor.numpy()
             sample = np.squeeze(image)
             sample = (sample + 1) / 2
             plt.imshow(sample, cmap="gray")
             plt.title(f"Label: {label}")
             plt.show()
+
+        [visualize(tensor=self.custom_dataset[index][0], label=self.custom_dataset[index][1]) for index in range(self.data_length)]
