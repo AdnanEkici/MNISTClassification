@@ -1,11 +1,14 @@
+from __future__ import annotations
+
 import torch.nn as nn
 import torch.nn.functional as F
 
 # TODO: add req.txt
 
+
 class MNISTClassifierModel(nn.Module):
     def __init__(self):
-        super(MNISTClassifierModel, self).__init__()
+        super().__init__()
         self.conv1 = nn.Conv2d(in_channels=1, out_channels=32, padding=1, kernel_size=(3, 3), stride=(1, 1))
         self.pool1 = nn.MaxPool2d(kernel_size=(2, 2), stride=(2, 2))
         self.conv2 = nn.Conv2d(in_channels=32, out_channels=64, padding=1, kernel_size=(3, 3), stride=(1, 1))
