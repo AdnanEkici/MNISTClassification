@@ -1,12 +1,10 @@
 from __future__ import annotations
-
 import torch.nn as nn
 import torch.nn.functional as F
 
-# TODO: add req.txt
-
 
 class MNISTClassifierModel(nn.Module):
+
     def __init__(self):
         super().__init__()
         self.conv1 = nn.Conv2d(in_channels=1, out_channels=32, padding=1, kernel_size=(3, 3), stride=(1, 1))
@@ -25,3 +23,10 @@ class MNISTClassifierModel(nn.Module):
         x = F.relu(self.fc1(x))
         x = self.fc2(x)
         return x
+
+
+# tensorboard --logdir=<log_directory>
+if __name__ == '__main__':
+    # Could be moved to test.
+    model = MNISTClassifierModel()
+    print(model)

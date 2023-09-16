@@ -5,12 +5,6 @@ import pandas as pd
 from torch.utils.data import Dataset
 from torchvision import transforms
 
-# TODO: add req.txt
-# TODO: add docstring
-# TODO: add train script and inference script
-# TODO: write read me
-# TODO add pre-commit to req.txt
-
 
 class CustomMNISTDataset(Dataset):
     def __init__(self, csv_file):
