@@ -1,2 +1,5 @@
 # MNISTClassification
-My personal exerciseon Pytorch.
+My personal exercise on Pytorch.
+
+
+#### UNDER CONSTRUCTION
