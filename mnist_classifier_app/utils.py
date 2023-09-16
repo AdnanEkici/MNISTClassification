@@ -1,11 +1,15 @@
 # TODO add jit
-import torch
+from __future__ import annotations
+
 import logging
-from logging.handlers import RotatingFileHandler
-from torch.utils.tensorboard import SummaryWriter
-from mnist_classifier_app.models.mnist_classifier_model import MNISTClassifierModel
-import yaml
 import os
+from logging.handlers import RotatingFileHandler
+
+import torch
+import yaml
+from torch.utils.tensorboard import SummaryWriter
+
+from mnist_classifier_app.models.mnist_classifier_model import MNISTClassifierModel
 
 
 def create_tensorboard_writer(log_directory: str):
@@ -45,7 +49,7 @@ def create_logger(**kwargs):
     formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
     # add a rotating handler
-    file_handler = RotatingFileHandler(kwargs["log_path"], maxBytes=20 * (1024 ** 2), backupCount=1)  # 20MB
+    file_handler = RotatingFileHandler(kwargs["log_path"], maxBytes=20 * (1024**2), backupCount=1)  # 20MB
     file_handler.setFormatter(formatter)
 
     # add console handler

@@ -1,10 +1,10 @@
 from __future__ import annotations
+
 import torch.nn as nn
 import torch.nn.functional as F
 
 
 class MNISTClassifierModel(nn.Module):
-
     def __init__(self):
         super().__init__()
         self.conv1 = nn.Conv2d(in_channels=1, out_channels=32, padding=1, kernel_size=(3, 3), stride=(1, 1))
@@ -26,7 +26,7 @@ class MNISTClassifierModel(nn.Module):
 
 
 # tensorboard --logdir=<log_directory>
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Could be moved to test.
     model = MNISTClassifierModel()
     print(model)

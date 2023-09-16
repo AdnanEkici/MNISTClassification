@@ -1,12 +1,12 @@
+from __future__ import annotations
+
 import torch
-
 import torch.nn as nn
-
 
 
 class CustomCrossEntropyLoss(nn.Module):
     def __init__(self):
-        super(CustomCrossEntropyLoss, self).__init__()
+        super().__init__()
 
     def forward(self, logits, labels):
         # Calculate your custom CrossEntropyLoss here
