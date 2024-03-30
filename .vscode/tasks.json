@@ -1,0 +1,100 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Install Development Environment",
+            "type": "shell",
+            "problemMatcher": [],
+            "linux": {
+                "command": "sh scripts/install_environment.sh ${config:venv_path}"
+            }
+        },
+        {
+            "label": "Up Mnist App",
+            "type": "docker-compose",
+            "dockerCompose": {
+                "up": {
+                    "build": true,
+                    "detached": true
+                },
+                "files": [
+                    "${workspaceFolder}/docker/docker-compose-dev.yml"
+                ]
+            }
+        },
+        {
+            "label": "Down Mnist App",
+            "type": "docker-compose",
+            "dockerCompose": {
+                "down": {
+                    "removeVolumes": false
+                },
+                "files": [
+                    "${workspaceFolder}/docker/docker-compose-dev.yml"
+                ]
+            }
+        },
+        {
+            "label": "Attach Mnist App Dev",
+            "type": "shell",
+            "problemMatcher": [],
+            "linux": {
+                "command": "scripts/vscode-attach-container.sh mnist-app-development-container /opt/app"
+            }
+        },
+        {
+            "label": "Start Training",
+            "type": "docker-compose",
+            "dockerCompose": {
+                "up": {
+                    "build": true,
+                    "detached": false
+                },
+                "files": [
+                    "${workspaceFolder}/docker/docker-compose-trainer.yml"
+                ]
+            },
+            "options": {
+                "env": {
+                    "CONFIG_FILE": "${input:training_config_filename}"
+                }
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Run Inference",
+            "type": "docker-compose",
+            "dockerCompose": {
+                "up": {
+                    "build": true,
+                    "detached": false
+                },
+                "files": [
+                    "${workspaceFolder}/docker/docker-compose-inference.yml"
+                ]
+            },
+            "options": {
+                "env": {
+                    "CONFIG_FILE": "${input:training_config_filename}"
+                }
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+
+    ],
+    "inputs":
+    [
+        {
+            "type": "promptString",
+            "id": "training_config_filename",
+            "description": "Enter training configuration file name.",
+            "password": false
+        }
+    ]
+}

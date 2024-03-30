@@ -1,0 +1,35 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Train Mnist",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "mnist_classifier_app/scripts/train.py",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "args": [
+                "--config",
+                "configuration_files/config_1.yml"
+            ],
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        },
+        {
+            "name": "Inference Mnist",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "mnist_classifier_app/scripts/inference.py",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "args": [
+                "--config",
+                "configuration_files/config_1.yml"
+            ],
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        },
+    ]
+}

@@ -1,0 +1,39 @@
+version: '3.4'
+
+services:
+  mnist-trainer:
+    image: mnist-app:latest
+    container_name: mnist-app-inference-container
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.mnist
+    working_dir: /opt/app
+    environment:
+      - DISPLAY=${DISPLAY}
+      - NVIDIA_DRIVER_CAPABILITIES=compute,graphics,utility,video
+      - NVIDIA_VISIBLE_DEVICES=all
+      - CUDA_DEVICE_ORDER=PCI_BUS_ID
+      - CUDA_VISIBLE_DEVICES=0
+      - CONFIGS_PATH=/opt/app/configuration_files
+    devices:
+      - /dev/snd:/dev/snd
+      - /dev/dri:/dev/dri
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.Xauthority:/root/.Xauthority:ro
+      - ../application_log:/opt/app/application_log:rw
+      - ../configuration_files:/opt/app/configuration_files:ro
+      - ../saved_mnist_classifier_models:/opt/app/saved_mnist_classifier_models:rw
+      - ../mnist_data:/opt/app/mnist_data:ro
+    runtime: nvidia
+    ipc: host
+    network_mode: host
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [ gpu ]
+    # entrypoint: "/bin/bash -c \"python3 mnist_classifier_app/scripts/inference.py -c $${CONFIGS_PATH}/${CONFIG_FILE}\""
+    stdin_open: true
+    tty: true # docker run -t

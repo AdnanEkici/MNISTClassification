@@ -3,7 +3,8 @@ from __future__ import annotations
 import unittest
 
 import torch
-from model import MNISTClassifierModel
+
+from mnist_classifier_app.models.mnist_classifier_model import MNISTClassifierModel
 
 
 class ModelTest(unittest.TestCase):

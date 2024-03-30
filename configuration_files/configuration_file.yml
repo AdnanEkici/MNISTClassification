@@ -1,17 +1,17 @@
 train:
-  device:
-  train_dataset_path:
-  validation_dataset_path:
+  device: # cuda:0 etc
+  train_dataset_path: # path/to/train/dataset
+  validation_dataset_path: # path/to/validation/dataset
   batch_size: 8
   learning_rate: 0.0001
   number_of_epochs: 10
-  model_save_path:
+  model_save_path: # path/to/save/models
   save_check_point: 1
-  model_path:
+  model_path: # path/to/pre-trained/model
 
 
 
 inference:
-  device:
-  test_dataset_path:
-  model_path:
+  device: # cuda:0 etc
+  test_dataset_path: # path/to/test/dataset
+  model_path: # path/to/model

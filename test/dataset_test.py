@@ -7,12 +7,13 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import torch
-from custom_dataloader import CustomMNISTDataset
 from torchvision import transforms
+
+from mnist_classifier_app.datasets.custom_dataset import CustomMNISTDataset
 
 
 class CustomDatasetTest(unittest.TestCase):
-    test_csv_path = "data" + os.sep + "test_mnist_data.csv"
+    test_csv_path = "test" + os.sep + "data" + os.sep + "test_mnist_data.csv"
     custom_dataset = CustomMNISTDataset(test_csv_path)
     data_length = len(custom_dataset)
 
@@ -22,8 +23,16 @@ class CustomDatasetTest(unittest.TestCase):
 
     def test_transforms(self):
         def check_types(expected_image, expected_label):
-            self.assertIsInstance(expected_image, torch.Tensor, msg=f"Data must be a tensor but received {type(expected_image)}")
-            self.assertIsInstance(expected_label, np.int64, msg=f"Label must be an integer but received {type(expected_label)}")
+            self.assertIsInstance(
+                expected_image,
+                torch.Tensor,
+                msg=f"Data must be a tensor but received {type(expected_image)}",
+            )
+            self.assertIsInstance(
+                expected_label,
+                np.int64,
+                msg=f"Label must be an integer but received {type(expected_label)}",
+            )
 
         [check_types(self.custom_dataset[index][0], self.custom_dataset[index][1]) for index in range(self.data_length)]
 
@@ -40,14 +49,20 @@ class CustomDatasetTest(unittest.TestCase):
             denormalized_tensor = normalized_tensor * 0.5 + 0.5
             are_equal = torch.eq(assertion_tensor, denormalized_tensor).all()
             self.assertTrue(
-                are_equal, msg="Normalization is not correctly done! Normalization must be done with transforms.Normalize((0.5,), (0.5,))."
+                are_equal,
+                msg="Normalization is not correctly done! Normalization must be done with transforms.Normalize((0.5,), (0.5,)).",
             )
 
     def test_get_item(self):
         assertion_list = [1, 0, 1, 4, 0, 0, 7, 3, 5, 3]
         incoming_labels = [self.custom_dataset[index][1] for index in range(self.data_length)]
-        self.assertListEqual(assertion_list, incoming_labels, msg="Labels must be came in correct order of assertion list")
+        self.assertListEqual(
+            assertion_list,
+            incoming_labels,
+            msg="Labels must be came in correct order of assertion list",
+        )
 
+    @unittest.skip("Should be worked manually for dataset visualization")
     def test_visulize_labels_and_tensors(self):
         for index in range(self.data_length):
             tensor, label = self.custom_dataset[index]

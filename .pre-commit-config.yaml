@@ -53,3 +53,11 @@ repos:
     rev: v1.0.0
     hooks:
       - id: check-json5
+  - repo: https://github.com/AdnanEkici/pre-commit-platform-safe-path-enforcer
+    rev: v0.0.2
+    hooks:
+        - id: pre-commit-platform-safe-path-enforcer
+          name: 'Check Path Separator'
+          entry: hooks/check_paths.py
+          language: script
+          types: [ python ]
