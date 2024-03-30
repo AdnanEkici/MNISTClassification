@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 
 import cv2
 import numpy as np
@@ -29,8 +30,24 @@ def inference(dataframe):
         predicted_class = predict(image=image)
         img_with_padding = cv2.copyMakeBorder(image.squeeze(), 28, 28, 28, 28, cv2.BORDER_CONSTANT, value=0)
         img_display = cv2.resize(img_with_padding, (200, 200))  # Resize for display
-        cv2.putText(img_display, f"Actual: {label}", (10, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
-        cv2.putText(img_display, f"Predicted: {predicted_class}", (10, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+        cv2.putText(
+            img_display,
+            f"Actual: {label}",
+            (10, 20),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.5,
+            (255, 255, 255),
+            1,
+        )
+        cv2.putText(
+            img_display,
+            f"Predicted: {predicted_class}",
+            (10, 40),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.5,
+            (255, 255, 255),
+            1,
+        )
         cv2.imshow("MNIST Image", img_display)
         key = cv2.waitKey(0)
         if key == ord("q"):
@@ -41,7 +58,11 @@ def inference(dataframe):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "-c", "--config", type=str, help="Path of th config file.", default=r"F:\Git_Repos\CURRENT_MNIST\configuration_files\configuration_file.yml"
+        "-c",
+        "--config",
+        type=str,
+        help="Path of th config file.",
+        default=f"configuration_files{os.sep}configuration_file.yml",
     )
     args = parser.parse_args()
     config_file = args.config

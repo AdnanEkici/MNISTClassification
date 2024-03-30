@@ -35,7 +35,10 @@ def get_devices(num_devices=4):
 def create_logger(**kwargs):
     if "log_path" not in kwargs:
         # path
-        # os.makedirs(".."+ os.sep + ".."+ os.sep + "application_log" + os.sep + "mnist_classifier_app.log", exist_ok=True)
+        os.makedirs(
+            "application_log",
+            exist_ok=True,
+        )
         kwargs["log_path"] = "application_log" + os.sep + "mnist_classifier_app.log"
     if "verbose" in kwargs:
         # level

@@ -40,7 +40,7 @@ def train(
             optimizer.step()
             running_loss += loss.item()
             step = epoch * len(train_loader) + i
-            tensorboard_writer.add_scalar("Loss/train", loss.item(), step)
+            tensorboard_writer.add_scalar("Loss/train", loss.item(), step)  # noqa
 
         utils.get_logger().info(f"Epoch [{epoch}/{num_epochs}] - Loss: {running_loss / len(train_loader)}")
         if save_check_point != 0 and epoch % save_check_point == 0:
@@ -68,14 +68,12 @@ def validation(model, loader, tensorboard_writer=None, device=torch.device("cuda
             correct += (predicted == labels).sum().item()
         validation_accuracy = 100 * correct / total
     utils.get_logger().info(f"Accuracy: {validation_accuracy}")
-    tensorboard_writer.add_scalar("Accuracy/validation", validation_accuracy, 0) if tensorboard_writer is not None else None
+    tensorboard_writer.add_scalar("Accuracy/validation", validation_accuracy, 0) if tensorboard_writer is not None else None  # noqa
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "-c", "--config", type=str, help="Path of th config file.", default=r"F:\Git_Repos\CURRENT_MNIST\configuration_files\configuration_file.yml"
-    )
+    parser.add_argument("-c", "--config", type=str, help="Path of th config file.", default=f"configuration_files{os.sep}configuration_file.yml")
     args = parser.parse_args()
     config_file = args.config
 

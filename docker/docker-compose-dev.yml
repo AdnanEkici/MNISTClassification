@@ -1,0 +1,39 @@
+version: '3.4'
+
+services:
+  mnist-trainer:
+    image: mnist-app:latest
+    container_name: mnist-app-development-container
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.mnist
+    working_dir: /opt/app
+    environment:
+      - DISPLAY=${DISPLAY}
+      - NVIDIA_DRIVER_CAPABILITIES=compute,graphics,utility,video
+      - NVIDIA_VISIBLE_DEVICES=all
+      - CUDA_DEVICE_ORDER=PCI_BUS_ID
+      - CUDA_VISIBLE_DEVICES=0
+    devices:
+      - /dev/snd:/dev/snd
+      - /dev/dri:/dev/dri
+    volumes:
+      - ../application_log:/opt/app/application_log:rw
+      - ../configuration_files:/opt/app/configuration_files:rw
+      - ../tensorboard_logs:/opt/app/tensorboard_logs:rw
+      - ../saved_mnist_classifier_models:/opt/app/saved_mnist_classifier_models:rw
+      - ../mnist_data:/opt/app/mnist_data:rw
+      - ../mnist_classifier_app:/opt/app/mnist_classifier_app:rw
+      - ../scripts:/opt/app/scripts
+      - ../test:/opt/app/test
+    runtime: nvidia
+    ipc: host
+    network_mode: host
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [ gpu ]
+    stdin_open: true # docker run -i
+    tty: true # docker run -t
